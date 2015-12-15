@@ -8,7 +8,8 @@ describe MoneyConversion::Validator do
     context 'with a valid instance' do
       let(:currency) { 'EUR' }
 
-      it { expect(described_class.validate_instance!(money)).to eq money }
+      it { expect(described_class.validate_instance!(money).amount).to eq money.amount }
+      it { expect(described_class.validate_instance!(money).currency).to eq money.currency }
     end
 
     context 'with an invalid instance' do

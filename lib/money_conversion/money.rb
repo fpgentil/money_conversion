@@ -20,23 +20,13 @@ module MoneyConversion
     end
 
     def convert_to(target_currency)
-      return self if currency == target_currency
-      Validator.validate_conversion!(currency, target_currency)
-
-      arithmetic    = operation(target_currency)
-      currency_rate = rate(target_currency)
-      new_value     = amount.send(arithmetic, currency_rate)
-
-      self.class.new(new_value, target_currency)
+      target_money = self.class.new(0, target_currency)
+      self.class.new(operator(target_money).convert, target_currency)
     end
 
     private
-    def operation(target_currency)
-      Configuration.currency_rates[target_currency] ? :* : :/
-    end
-
-    def rate(target_currency)
-      Configuration.currency_rates[target_currency] || Configuration.currency_rates[currency]
+    def operator(target_money)
+      Operator.new(self, target_money)
     end
   end
 end
