@@ -1,5 +1,8 @@
 # MoneyConversion
 
+[![Code Climate](https://codeclimate.com/github/fpgentil/money_conversion/badges/gpa.svg)](https://codeclimate.com/github/fpgentil/money_conversion)
+[![Build Status](https://travis-ci.org/fpgentil/money_conversion.svg?branch=master)](https://travis-ci.org/fpgentil/money_conversion)
+
 This is a Ruby gem which performs currency conversion and arithmetics with different currencies.
 
 ## Installation
