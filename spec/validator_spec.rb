@@ -32,7 +32,7 @@ describe MoneyConversion::Validator do
       end
 
       context 'when conversion is invalid' do
-        it { expect { described_class.validate_conversion!('USD', 'BRL') }.to raise_error MoneyConversion::Errors::ConversionRateNotFound }
+        it { expect(described_class.validate_conversion!('USD', 'BRL')).to be_falsey }
       end
     end
   end

@@ -9,8 +9,12 @@ module MoneyConversion
 
     def convert
       return source_money.amount if source_money.currency == target_money.currency
-      Validator.validate_conversion!(source_money.currency, target_money.currency)
-      source_money.amount.send(operation, rate)
+      if Validator.validate_conversion!(source_money.currency, target_money.currency)
+        source_money.amount.send(operation, rate)
+      else
+        base_conversion = source_money.amount.send(inversion_operation, base_rate).round(2)
+        base_conversion.send(operation, rate)
+      end
     end
 
     def calculate(method)
@@ -28,6 +32,14 @@ module MoneyConversion
 
     def rate
       Configuration.currency_rates[target_money.currency] || Configuration.currency_rates[source_money.currency]
+    end
+
+    def inversion_operation
+      Configuration.currency_rates[target_money.currency] ? :/ : :*
+    end
+
+    def base_rate
+      Configuration.currency_rates[source_money.currency]
     end
   end
 end

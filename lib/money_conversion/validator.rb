@@ -9,7 +9,7 @@ module MoneyConversion
 
       def validate_conversion!(source_currency, target_currency)
         raise MoneyConversion::Errors::CurrencyNotFound unless Configuration.valid_currency?(source_currency)
-        raise MoneyConversion::Errors::ConversionRateNotFound unless Configuration.valid_conversion?(source_currency, target_currency)
+        Configuration.valid_conversion?(source_currency, target_currency)
       end
 
       def validate_conversion_param!(money_object)

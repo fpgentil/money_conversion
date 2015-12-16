@@ -80,7 +80,7 @@ describe Money do
     context 'with invalid conversion' do
       let(:money) { described_class.new(50, 'USD') }
 
-      it { expect{ money.convert_to('BRL') }.to raise_error MoneyConversion::Errors::ConversionRateNotFound }
+      it { expect(money.convert_to('BRL')).to eq money.to_eur.to_brl }
     end
   end
 
@@ -152,7 +152,6 @@ describe Money do
 
     context 'for an invalid conversion' do
       it { expect{ money_1.to_abc }.to raise_error NoMethodError }
-      it { expect{ money_2.to_brl }.to raise_error MoneyConversion::Errors::ConversionRateNotFound }
     end
   end
 
