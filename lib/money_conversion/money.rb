@@ -54,6 +54,13 @@ module MoneyConversion
       self.class.new(operator(target_money).calculate(:/), currency)
     end
 
+    def method_missing(name, *args)
+      MoneyConversion::Configuration.valid_currencies.each do |currency|
+        return self.convert_to(currency) if name == "to_#{currency.downcase}".to_sym
+      end
+      raise NoMethodError.new("undefined method #{name} for #{self.class}")
+    end
+
     private
     def operator(target_money, options={})
       target_money = target_money.convert_to(currency) unless options[:to_convert]

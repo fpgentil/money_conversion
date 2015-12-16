@@ -93,7 +93,7 @@ describe MoneyConversion::Money do
 
       it { expect(result.amount).to eq 68.14 }
       it { expect(result.currency).to eq 'EUR' }
-      it { expect(result.class).to eq MoneyConversion::Money }
+      it { expect(result).to be_a MoneyConversion::Money }
     end
 
     describe 'subtraction' do
@@ -101,7 +101,7 @@ describe MoneyConversion::Money do
 
       it { expect(result.amount).to eq 31.86 }
       it { expect(result.currency).to eq 'EUR' }
-      it { expect(result.class).to eq MoneyConversion::Money }
+      it { expect(result).to be_a MoneyConversion::Money }
     end
 
     describe 'multiplication' do
@@ -109,7 +109,7 @@ describe MoneyConversion::Money do
 
       it { expect(result.amount).to eq 100 }
       it { expect(result.currency).to eq 'EUR' }
-      it { expect(result.class).to eq MoneyConversion::Money }
+      it { expect(result).to be_a MoneyConversion::Money }
     end
 
     describe 'division' do
@@ -117,7 +117,7 @@ describe MoneyConversion::Money do
 
       it { expect(result.amount).to eq 25 }
       it { expect(result.currency).to eq 'EUR' }
-      it { expect(result.class).to eq MoneyConversion::Money }
+      it { expect(result).to be_a MoneyConversion::Money }
     end
 
     describe 'equality' do
@@ -136,6 +136,23 @@ describe MoneyConversion::Money do
       let(:result) { fifty_euro < twenty_usd }
 
       it { expect(result).to be_falsey }
+    end
+  end
+
+  describe '.method_missing' do
+    let(:money_1) { described_class.new(50, 'EUR') }
+    let(:money_2) { described_class.new(50, 'USD') }
+
+    context 'for a valid conversion' do
+      it { expect(money_1.to_usd).to be_a MoneyConversion::Money }
+      it { expect(money_1.to_usd).to eq MoneyConversion::Money.new(55.14, 'USD') }
+      it { expect(money_2.to_eur).to be_a MoneyConversion::Money }
+      it { expect(money_2.to_eur).to eq MoneyConversion::Money.new(45.34, 'EUR') }
+    end
+
+    context 'for an invalid conversion' do
+      it { expect{ money_1.to_abc }.to raise_error NoMethodError }
+      it { expect{ money_2.to_brl }.to raise_error MoneyConversion::Errors::ConversionRateNotFound }
     end
   end
 
