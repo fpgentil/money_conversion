@@ -36,4 +36,16 @@ describe MoneyConversion::Validator do
       end
     end
   end
+
+  describe '.validate_conversion_param!' do
+    let(:money) { MoneyConversion::Money.new(50, 'EUR') }
+
+    context 'with a valid param' do
+      it { expect(described_class.validate_conversion_param!(money)).to be_nil }
+    end
+
+    context 'when an invalid param' do
+      it { expect{ described_class.validate_conversion_param!('EUR') }.to raise_error MoneyConversion::Errors::InvalidMoneyArgument }
+    end
+  end
 end

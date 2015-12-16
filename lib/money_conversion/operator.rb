@@ -8,9 +8,17 @@ module MoneyConversion
     end
 
     def convert
-      return source_money if source_money.currency == target_money.currency
+      return source_money.amount if source_money.currency == target_money.currency
       Validator.validate_conversion!(source_money.currency, target_money.currency)
       source_money.amount.send(operation, rate)
+    end
+
+    def calculate(method)
+      source_money.amount.send(method, target_money.amount.to_f)
+    end
+
+    def compare(method)
+      calculate(method)
     end
 
     private

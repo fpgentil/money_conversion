@@ -83,4 +83,60 @@ describe MoneyConversion::Money do
       it { expect{ money.convert_to('BRL') }.to raise_error MoneyConversion::Errors::ConversionRateNotFound }
     end
   end
+
+  describe 'arithmetic operations' do
+    let(:fifty_euro) { described_class.new(50, 'EUR') }
+    let(:twenty_usd) { described_class.new(20, 'USD') }
+
+    describe 'sum' do
+      let(:result) { fifty_euro + twenty_usd }
+
+      it { expect(result.amount).to eq 68.14 }
+      it { expect(result.currency).to eq 'EUR' }
+      it { expect(result.class).to eq MoneyConversion::Money }
+    end
+
+    describe 'subtraction' do
+      let(:result) { fifty_euro - twenty_usd }
+
+      it { expect(result.amount).to eq 31.86 }
+      it { expect(result.currency).to eq 'EUR' }
+      it { expect(result.class).to eq MoneyConversion::Money }
+    end
+
+    describe 'multiplication' do
+      let(:result) { fifty_euro * 2 }
+
+      it { expect(result.amount).to eq 100 }
+      it { expect(result.currency).to eq 'EUR' }
+      it { expect(result.class).to eq MoneyConversion::Money }
+    end
+
+    describe 'division' do
+      let(:result) { fifty_euro / 2 }
+
+      it { expect(result.amount).to eq 25 }
+      it { expect(result.currency).to eq 'EUR' }
+      it { expect(result.class).to eq MoneyConversion::Money }
+    end
+
+    describe 'equality' do
+      let(:result) { fifty_euro == twenty_usd }
+
+      it { expect(result).to be_falsey }
+    end
+
+    describe 'higher than' do
+      let(:result) { fifty_euro > twenty_usd }
+
+      it { expect(result).to be_truthy }
+    end
+
+    describe 'lower than' do
+      let(:result) { fifty_euro < twenty_usd }
+
+      it { expect(result).to be_falsey }
+    end
+  end
+
 end

@@ -15,11 +15,17 @@ describe MoneyConversion::Operator do
   end
 
   describe '#calculate' do
-    pending
+    it 'applies method to perform an arithmetic operation' do
+      expect(operator.calculate(:+)).to eq 50
+      expect(operator.calculate(:*)).to eq 0
+    end
   end
 
   describe '#compare' do
-    pending
+    it 'applies method to compare source and target' do
+      expect(operator.compare(:>)).to be_truthy
+      expect(operator.compare(:<)).to be_falsey
+    end
   end
 
 end
