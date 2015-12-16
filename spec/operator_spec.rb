@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe MoneyConversion::Operator do
-  let(:source_money) { MoneyConversion::Money.new(50, 'EUR') }
-  let(:target_money) { MoneyConversion::Money.new(0, 'USD') }
+  let(:source_money) { Money.new(50, 'EUR') }
+  let(:target_money) { Money.new(0, 'USD') }
 
   let(:operator) { described_class.new(source_money, target_money) }
 

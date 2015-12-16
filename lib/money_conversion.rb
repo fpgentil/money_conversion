@@ -3,7 +3,7 @@ require 'money_conversion/version'
 require 'money_conversion/errors'
 require 'money_conversion/operator'
 require 'money_conversion/validator'
-require 'money_conversion/money'
+require 'money'
 
 module MoneyConversion
   def self.configuration

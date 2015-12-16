@@ -13,7 +13,7 @@ module MoneyConversion
       end
 
       def validate_conversion_param!(money_object)
-        raise MoneyConversion::Errors::InvalidMoneyArgument unless money_object.is_a? MoneyConversion::Money
+        raise MoneyConversion::Errors::InvalidMoneyArgument unless money_object.is_a? Money
       end
     end
   end

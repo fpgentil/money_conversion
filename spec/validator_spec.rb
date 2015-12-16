@@ -3,7 +3,7 @@ require 'spec_helper'
 describe MoneyConversion::Validator do
 
   describe '.validate_instance!' do
-    let(:money) { MoneyConversion::Money.new(50, currency) }
+    let(:money) { Money.new(50, currency) }
 
     context 'with a valid instance' do
       let(:currency) { 'EUR' }
@@ -38,7 +38,7 @@ describe MoneyConversion::Validator do
   end
 
   describe '.validate_conversion_param!' do
-    let(:money) { MoneyConversion::Money.new(50, 'EUR') }
+    let(:money) { Money.new(50, 'EUR') }
 
     context 'with a valid param' do
       it { expect(described_class.validate_conversion_param!(money)).to be_nil }

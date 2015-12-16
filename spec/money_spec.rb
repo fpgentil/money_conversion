@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MoneyConversion::Money do
+describe Money do
   describe '.conversion_rates' do
     let(:hash_rates) { { 'BRL' => 3.78 } }
     before { described_class.conversion_rates('USD', hash_rates) }
@@ -93,7 +93,7 @@ describe MoneyConversion::Money do
 
       it { expect(result.amount).to eq 68.14 }
       it { expect(result.currency).to eq 'EUR' }
-      it { expect(result).to be_a MoneyConversion::Money }
+      it { expect(result).to be_a Money }
     end
 
     describe 'subtraction' do
@@ -101,7 +101,7 @@ describe MoneyConversion::Money do
 
       it { expect(result.amount).to eq 31.86 }
       it { expect(result.currency).to eq 'EUR' }
-      it { expect(result).to be_a MoneyConversion::Money }
+      it { expect(result).to be_a Money }
     end
 
     describe 'multiplication' do
@@ -109,7 +109,7 @@ describe MoneyConversion::Money do
 
       it { expect(result.amount).to eq 100 }
       it { expect(result.currency).to eq 'EUR' }
-      it { expect(result).to be_a MoneyConversion::Money }
+      it { expect(result).to be_a Money }
     end
 
     describe 'division' do
@@ -117,7 +117,7 @@ describe MoneyConversion::Money do
 
       it { expect(result.amount).to eq 25 }
       it { expect(result.currency).to eq 'EUR' }
-      it { expect(result).to be_a MoneyConversion::Money }
+      it { expect(result).to be_a Money }
     end
 
     describe 'equality' do
@@ -144,10 +144,10 @@ describe MoneyConversion::Money do
     let(:money_2) { described_class.new(50, 'USD') }
 
     context 'for a valid conversion' do
-      it { expect(money_1.to_usd).to be_a MoneyConversion::Money }
-      it { expect(money_1.to_usd).to eq MoneyConversion::Money.new(55.14, 'USD') }
-      it { expect(money_2.to_eur).to be_a MoneyConversion::Money }
-      it { expect(money_2.to_eur).to eq MoneyConversion::Money.new(45.34, 'EUR') }
+      it { expect(money_1.to_usd).to be_a Money }
+      it { expect(money_1.to_usd).to eq Money.new(55.14, 'USD') }
+      it { expect(money_2.to_eur).to be_a Money }
+      it { expect(money_2.to_eur).to eq Money.new(45.34, 'EUR') }
     end
 
     context 'for an invalid conversion' do
