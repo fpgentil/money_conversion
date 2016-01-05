@@ -21,10 +21,6 @@ module MoneyConversion
       source_money.amount.send(method, target_money.amount.to_f)
     end
 
-    def compare(method)
-      calculate(method)
-    end
-
     private
     def operation
       Configuration.currency_rates[target_money.currency] ? :* : :/
