@@ -1,4 +1,5 @@
 class Money
+  include MoneyConversion::Comparator
   attr_reader :amount, :currency
 
   def initialize(amount, currency)
@@ -29,18 +30,6 @@ class Money
 
   def - (target_money)
     self.class.new(operator(target_money).calculate(:-), currency)
-  end
-
-  def == (target_money)
-    operator(target_money).compare(:==)
-  end
-
-  def > (target_money)
-    operator(target_money).compare(:>)
-  end
-
-  def < (target_money)
-    operator(target_money).compare(:<)
   end
 
   def * (value)
