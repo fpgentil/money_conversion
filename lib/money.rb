@@ -1,5 +1,7 @@
 class Money
   include MoneyConversion::Comparator
+  include MoneyConversion::Operator
+
   attr_reader :amount, :currency
 
   def initialize(amount, currency)
@@ -24,24 +26,6 @@ class Money
     self.class.new(operator(target_money, to_convert: true).convert, target_currency)
   end
 
-  def + (target_money)
-    self.class.new(operator(target_money).calculate(:+), currency)
-  end
-
-  def - (target_money)
-    self.class.new(operator(target_money).calculate(:-), currency)
-  end
-
-  def * (value)
-    target_money = self.class.new(value, currency)
-    self.class.new(operator(target_money).calculate(:*), currency)
-  end
-
-  def / (value)
-    target_money = self.class.new(value, currency)
-    self.class.new(operator(target_money).calculate(:/), currency)
-  end
-
   def method_missing(name, *args)
     MoneyConversion::Configuration.valid_currencies.each do |currency|
       return self.convert_to(currency) if name == "to_#{currency.downcase}".to_sym
@@ -52,6 +36,6 @@ class Money
   private
   def operator(target_money, options={})
     target_money = target_money.convert_to(currency) unless options[:to_convert]
-    MoneyConversion::Operator.new(self, target_money)
+    MoneyConversion::Converter.new(self, target_money)
   end
 end
